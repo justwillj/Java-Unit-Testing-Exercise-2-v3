@@ -124,7 +124,7 @@ public class PetController {
   /**
    * Update customer by id customer.
    *
-   * @param id the id of the pet to be updated from the path variable
+   * @param id  the id of the pet to be updated from the path variable
    * @param pet the pet's new information from the request body
    * @return the pet  if correctly input
    */

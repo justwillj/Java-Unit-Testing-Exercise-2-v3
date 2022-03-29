@@ -17,21 +17,17 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Pet {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @NotBlank(message = "name" + REQUIRED_FIELD)
-  private String name;
-
-  @NotBlank(message = "breed" + REQUIRED_FIELD)
-  private String breed;
-
-  private Integer age;
-
   @OneToMany(cascade = CascadeType.ALL)
   @JsonIgnore
   private final Set<Vaccination> Vaccinations = new HashSet<>();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @NotBlank(message = "name" + REQUIRED_FIELD)
+  private String name;
+  @NotBlank(message = "breed" + REQUIRED_FIELD)
+  private String breed;
+  private Integer age;
 
   public Pet() {
   }

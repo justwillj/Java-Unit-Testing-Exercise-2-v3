@@ -91,7 +91,7 @@ public class PetServiceImpl implements PetService {
   /**
    * Update an existing Pet in the database.
    *
-   * @param id - the id of the Pet to update.
+   * @param id  - the id of the Pet to update.
    * @param Pet - the Pet information to update.
    */
   public Pet updatePetById(Long id, Pet Pet) {

@@ -93,7 +93,7 @@ public class VaccinationServiceImpl implements VaccinationService {
    * Updates the database information for an existing Vaccination. Does not insert a record if the
    * id does not exist.
    *
-   * @param id - the id of the Vaccination to update.
+   * @param id          - the id of the Vaccination to update.
    * @param Vaccination - the supplied Vaccination information to update the database record with.
    * @return - the updated Vaccination or a 404 if the Vaccination was not found
    */

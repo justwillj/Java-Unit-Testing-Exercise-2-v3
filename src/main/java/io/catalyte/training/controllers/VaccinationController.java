@@ -51,7 +51,7 @@ public class VaccinationController {
    * non-null vaccination
    *
    * @param vaccination vaccination object which can have null or non-null fields, returns status
-   * 200
+   *                    200
    * @return List of vaccinations
    */
   @GetMapping
