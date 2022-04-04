@@ -5,17 +5,9 @@ import static io.catalyte.training.constants.StringConstants.LOGGER_DELETE_REQUE
 import static io.catalyte.training.constants.StringConstants.LOGGER_POST_REQUEST_RECEIVED;
 import static io.catalyte.training.constants.StringConstants.LOGGER_PUT_REQUEST_RECEIVED;
 import static io.catalyte.training.constants.StringConstants.LOGGER_REQUEST_RECEIVED;
-import static io.catalyte.training.constants.StringConstants.MESSAGE_OK;
-import static io.catalyte.training.constants.StringConstants.SERVER_ERROR;
-import static io.catalyte.training.constants.StringConstants.SERVICE_UNAVAILABLE;
 
 import io.catalyte.training.entities.Pet;
-import io.catalyte.training.exceptions.ExceptionResponse;
-import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.services.PetService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
@@ -39,10 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(CONTEXT_PETS)
-@ApiResponses(value = {
-    @ApiResponse(code = 500, message = SERVER_ERROR, response = ExceptionResponse.class),
-    @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE, response = ServiceUnavailable.class)
-})
 public class PetController {
 
   private final Logger logger = LoggerFactory.getLogger(PetController.class);
@@ -57,11 +45,6 @@ public class PetController {
    * @return the Pet with said id
    */
   @GetMapping(value = "/{id}")
-  @ApiOperation("Finds a Customer by Id")
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK", response = Pet.class),
-      @ApiResponse(code = 404, message = "NOT FOUND")
-  })
   public ResponseEntity<Pet> getPet(@PathVariable Long id) {
     logger.info(new Date() + LOGGER_REQUEST_RECEIVED + id);
 
@@ -75,10 +58,6 @@ public class PetController {
    * @return List of pets
    */
   @GetMapping
-  @ApiOperation("Gets all pets, or all pets matching an example with pet fields")
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = MESSAGE_OK, response = Pet.class)
-  })
   public ResponseEntity<List<Pet>> queryPets(Pet pet) {
     logger.info(new Date() + LOGGER_REQUEST_RECEIVED + pet.toString());
 
@@ -92,11 +71,6 @@ public class PetController {
    * @return a list of pets  correctly added
    */
   @PostMapping(value = "/all")
-  @ApiOperation("Adds a list of new pets to the database")
-  @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "CREATED", response = Pet.class),
-      @ApiResponse(code = 400, message = "BAD REQUEST")
-  })
   public ResponseEntity<List<Pet>> saveAll(@Valid @RequestBody List<Pet> pets) {
     logger.info(new Date() + LOGGER_POST_REQUEST_RECEIVED);
 
@@ -110,11 +84,6 @@ public class PetController {
    * @return the pet if correctly added
    */
   @PostMapping
-  @ApiOperation("Adds a new pet to the database")
-  @ApiResponses(value = {
-      @ApiResponse(code = 201, message = "CREATED", response = Pet.class),
-      @ApiResponse(code = 400, message = "BAD REQUEST")
-  })
   public ResponseEntity<Pet> save(@Valid @RequestBody Pet pet) {
     logger.info(new Date() + LOGGER_POST_REQUEST_RECEIVED);
 
@@ -129,12 +98,6 @@ public class PetController {
    * @return the pet  if correctly input
    */
   @PutMapping(value = "/{id}")
-  @ApiOperation("Updates a pet by Id")
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = MESSAGE_OK, response = Pet.class),
-      @ApiResponse(code = 404, message = "NOT FOUND"),
-      @ApiResponse(code = 400, message = "BAD REQUEST")
-  })
   public ResponseEntity<Pet> updatePetById(
       @PathVariable Long id, @Valid @RequestBody Pet pet) {
     logger.info(new Date() + LOGGER_PUT_REQUEST_RECEIVED + id);
@@ -149,11 +112,6 @@ public class PetController {
    */
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  @ApiOperation("Deletes a Pet by Id")
-  @ApiResponses(value = {
-      @ApiResponse(code = 204, message = "NO CONTENT"),
-      @ApiResponse(code = 404, message = "NOT FOUND")
-  })
   public void deletePet(@PathVariable Long id) {
     logger.info(new Date() + LOGGER_DELETE_REQUEST_RECEIVED + id);
 
