@@ -3,16 +3,9 @@ package io.catalyte.training.controllers;
 import static io.catalyte.training.constants.StringConstants.CONTEXT_VACCINATIONS;
 import static io.catalyte.training.constants.StringConstants.LOGGER_REQUEST_BY_BREED_RECEIVED;
 import static io.catalyte.training.constants.StringConstants.LOGGER_REQUEST_RECEIVED;
-import static io.catalyte.training.constants.StringConstants.SERVER_ERROR;
-import static io.catalyte.training.constants.StringConstants.SERVICE_UNAVAILABLE;
 
 import io.catalyte.training.entities.Vaccination;
-import io.catalyte.training.exceptions.ExceptionResponse;
-import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.services.VaccinationService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
@@ -35,10 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(CONTEXT_VACCINATIONS)
-@ApiResponses(value = {
-    @ApiResponse(code = 500, message = SERVER_ERROR, response = ExceptionResponse.class),
-    @ApiResponse(code = 503, message = SERVICE_UNAVAILABLE, response = ServiceUnavailable.class)
-})
 public class VaccinationController {
 
   private final Logger logger = LoggerFactory.getLogger(VaccinationController.class);
@@ -55,10 +44,6 @@ public class VaccinationController {
    * @return List of vaccinations
    */
   @GetMapping
-  @ApiOperation("Gets all vaccinations, or all vaccinations matching an example with vaccination fields")
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK", response = Vaccination.class)
-  })
   public ResponseEntity<List<Vaccination>> getVaccinations(Vaccination vaccination) {
     logger.info(new Date() + LOGGER_REQUEST_RECEIVED);
 
@@ -72,11 +57,6 @@ public class VaccinationController {
    * @return the Vaccination with said id
    */
   @GetMapping(value = "/{id}")
-  @ApiOperation("Finds a Vaccination by Id")
-  @ApiResponses(value = {
-      @ApiResponse(code = 200, message = "OK", response = Vaccination.class),
-      @ApiResponse(code = 404, message = "NOT FOUND")
-  })
   public ResponseEntity<Vaccination> getVaccination(@PathVariable Long id) {
     logger.info(new Date() + LOGGER_REQUEST_RECEIVED + id);
 
