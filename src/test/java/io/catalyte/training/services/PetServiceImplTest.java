@@ -9,6 +9,7 @@ import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.repositories.PetRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -42,6 +43,7 @@ class PetServiceImplTest {
 
     when(petRepository.findAll()).thenReturn(testList);
     when(petRepository.findAll(any(Example.class))).thenReturn(testList);
+    when(petRepository.findById(any(Long.class))).thenReturn(Optional.of(testList.get(0)));
   }
 
   @Test
@@ -64,4 +66,5 @@ class PetServiceImplTest {
         () -> petServiceImpl.queryPets(new Pet()));
 
   }
+
 }
