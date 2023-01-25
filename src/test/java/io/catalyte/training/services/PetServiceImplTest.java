@@ -46,6 +46,8 @@ class PetServiceImplTest {
     when(petRepository.findAll()).thenReturn(testList);
     when(petRepository.findAll(any(Example.class))).thenReturn(testList);
     when(petRepository.findById(any(Long.class))).thenReturn(Optional.of(testList.get(0)));
+    when(petRepository.save(any(Pet.class))).thenReturn(testList.get(0));
+
   }
 
   @Test
