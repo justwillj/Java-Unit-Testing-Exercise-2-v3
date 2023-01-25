@@ -67,4 +67,10 @@ class PetServiceImplTest {
 
   }
 
+  @Test
+  public void getPet() {
+    Pet result = petServiceImpl.getPet(1L);
+    assertEquals(testPet, result);
+  }
+
 }
