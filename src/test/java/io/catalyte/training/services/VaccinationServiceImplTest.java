@@ -38,7 +38,7 @@ public class VaccinationServiceImplTest {
   PetService petService;
 
   @InjectMocks
-  VaccinationServiceImpl vaccinationServiceImpL;
+  VaccinationServiceImpl vaccinationServiceImpl;
 
   // member variables for expected results
   Pet testPet;
