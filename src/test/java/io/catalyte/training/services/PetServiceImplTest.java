@@ -2,6 +2,7 @@ package io.catalyte.training.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import io.catalyte.training.entities.Pet;
@@ -71,6 +72,13 @@ class PetServiceImplTest {
   public void getPet() {
     Pet result = petServiceImpl.getPet(1L);
     assertEquals(testPet, result);
+  }
+
+  @Test
+  public void getPetDBError() {
+    when(petRepository.findById(anyLong())).thenThrow(EmptyResultDataAccessException.class);
+    assertThrows(ServiceUnavailable.class,
+        () -> petServiceImpl.getPet(1L));
   }
 
 }
