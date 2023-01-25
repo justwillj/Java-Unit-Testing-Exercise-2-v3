@@ -6,10 +6,8 @@ import static org.mockito.Mockito.when;
 
 import io.catalyte.training.entities.Pet;
 import io.catalyte.training.repositories.PetRepository;
-import io.catalyte.training.repositories.VaccinationRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -41,11 +39,18 @@ class PetServiceImplTest {
     testList.add(testPet);
 
     when(petRepository.findAll()).thenReturn(testList);
+    when(petRepository.findAll(any(Example.class))).thenReturn(testList);
   }
 
   @Test
   void queryAllPets() {
     List<Pet> results = petServiceImpl.queryPets(new Pet());
+    assertEquals(testList,results);
+  }
+
+  @Test
+  void queryAllPetsWithSample() {
+    List<Pet> results = petServiceImpl.queryPets(testPet);
     assertEquals(testList,results);
   }
 }
