@@ -102,4 +102,12 @@ class PetServiceImplTest {
     assertEquals(testPet, result);
   }
 
+  @Test
+  public void addPetDBError() {
+    when(petRepository.save(any(Pet.class))).thenThrow(
+        new EmptyResultDataAccessException("Database unavailable", 0));
+    assertThrows(ServiceUnavailable.class,
+        () -> petServiceImpl.addPet(testPet));
+  }
+
 }
