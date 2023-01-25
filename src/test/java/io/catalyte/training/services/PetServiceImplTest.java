@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import io.catalyte.training.entities.Pet;
+import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.repositories.PetRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 
 class PetServiceImplTest {
@@ -52,5 +54,14 @@ class PetServiceImplTest {
   void queryAllPetsWithSample() {
     List<Pet> results = petServiceImpl.queryPets(testPet);
     assertEquals(testList,results);
+  }
+
+  @Test
+  void queryAllPetsDBError() {
+    when(petRepository.findAll()).thenThrow(EmptyResultDataAccessException.class);
+
+    assertThrows(ServiceUnavailable.class,
+        () -> petServiceImpl.queryPets(new Pet()));
+
   }
 }
