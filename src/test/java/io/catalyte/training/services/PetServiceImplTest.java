@@ -96,4 +96,10 @@ class PetServiceImplTest {
             + exception.getMessage());
   }
 
+  @Test
+  public void addPet() {
+    Pet result = petServiceImpl.addPet(testPet);
+    assertEquals(testPet, result);
+  }
+
 }
