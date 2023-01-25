@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import io.catalyte.training.entities.Pet;
+import io.catalyte.training.exceptions.ResourceNotFound;
 import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.repositories.PetRepository;
 import java.util.ArrayList;
@@ -79,6 +80,18 @@ class PetServiceImplTest {
     when(petRepository.findById(anyLong())).thenThrow(EmptyResultDataAccessException.class);
     assertThrows(ServiceUnavailable.class,
         () -> petServiceImpl.getPet(1L));
+  }
+
+  @Test
+  public void getPetNotFound() {
+    when(petRepository.findById(anyLong())).thenReturn(Optional.empty());
+    Exception exception = assertThrows(ResourceNotFound.class,
+        () -> petServiceImpl.getPet(1L));
+    String expectedMessage = "Could not locate a Pet with the id: 1";
+    assertEquals(expectedMessage,
+        exception.getMessage(),
+        () -> "Message did not equal '" + expectedMessage + "', actual message:"
+            + exception.getMessage());
   }
 
 }
