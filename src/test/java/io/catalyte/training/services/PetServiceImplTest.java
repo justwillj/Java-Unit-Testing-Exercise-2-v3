@@ -142,4 +142,17 @@ class PetServiceImplTest {
   }
 
 
+  @Test
+  public void updatePetByIdNotFound() {
+    when(petRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+    Exception exception = assertThrows(ResourceNotFound.class,
+        () -> petServiceImpl.updatePetById(1L, testPet));
+    String expectedMessage = "Could not locate a Pet with the id: 1";
+    assertEquals(expectedMessage,
+        exception.getMessage(),
+        () -> "Message did not equal '" + expectedMessage + "', actual message:"
+            + exception.getMessage());
+  }
+
 }
