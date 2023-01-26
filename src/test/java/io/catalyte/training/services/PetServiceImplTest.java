@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import io.catalyte.training.entities.Pet;
+import io.catalyte.training.exceptions.BadDataResponse;
 import io.catalyte.training.exceptions.ResourceNotFound;
 import io.catalyte.training.exceptions.ServiceUnavailable;
 import io.catalyte.training.repositories.PetRepository;
@@ -156,6 +157,18 @@ class PetServiceImplTest {
         () -> "Message did not equal '" + expectedMessage + "', actual message:"
             + exception.getMessage());
   }
+
+  @Test
+  public void updatePetByIdBadData() {
+    Exception exception = assertThrows(BadDataResponse.class,
+        () -> petServiceImpl.updatePetById(2L, testPet));
+    String expectedMessage = "Pet ID must match the ID specified in the URL";
+    assertEquals(expectedMessage,
+        exception.getMessage(),
+        () -> "Message did not equal '" + expectedMessage + "', actual message:"
+            + exception.getMessage());
+  }
+
 
   @Test
   public void deletePet() {
