@@ -165,10 +165,18 @@ class PetServiceImplTest {
   }
 
   @Test
-  public void deleteVaccinationBadID() {
+  public void deletePetBadID() {
     doThrow(new ResourceNotFound("Database unavailable")).when(petRepository)
         .deleteById(anyLong());
     assertThrows(ResourceNotFound.class,
+        () -> petServiceImpl.deletePet(1L));
+  }
+
+  @Test
+  public void deletePetDBError() {
+    doThrow(new ServiceUnavailable("Database unavailable")).when(petRepository)
+        .existsById(anyLong());
+    assertThrows(ServiceUnavailable.class,
         () -> petServiceImpl.deletePet(1L));
   }
 
