@@ -1,5 +1,6 @@
 package io.catalyte.training.services;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -161,6 +162,14 @@ class PetServiceImplTest {
     when(petRepository.existsById(anyLong())).thenReturn(true);
     petServiceImpl.deletePet(1L);
     verify(petRepository).deleteById(any());
+  }
+
+  @Test
+  public void deleteVaccinationBadID() {
+    doThrow(new ResourceNotFound("Database unavailable")).when(petRepository)
+        .deleteById(anyLong());
+    assertThrows(ResourceNotFound.class,
+        () -> petServiceImpl.deletePet(1L));
   }
 
 
