@@ -128,4 +128,11 @@ class PetServiceImplTest {
   }
 
 
+  @Test
+  public void updatePetById() {
+    Pet result = petServiceImpl.updatePetById(1L, testPet);
+    assertEquals(testPet, result);
+  }
+
+
 }
