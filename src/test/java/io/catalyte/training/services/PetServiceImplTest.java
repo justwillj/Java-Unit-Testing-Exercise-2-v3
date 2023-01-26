@@ -2,6 +2,7 @@ package io.catalyte.training.services;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +48,7 @@ class PetServiceImplTest {
     when(petRepository.findAll(any(Example.class))).thenReturn(testList);
     when(petRepository.findById(any(Long.class))).thenReturn(Optional.of(testList.get(0)));
     when(petRepository.save(any(Pet.class))).thenReturn(testList.get(0));
+    when(petRepository.saveAll(anyCollection())).thenReturn(testList);
 
   }
 
@@ -108,6 +110,12 @@ class PetServiceImplTest {
         new EmptyResultDataAccessException("Database unavailable", 0));
     assertThrows(ServiceUnavailable.class,
         () -> petServiceImpl.addPet(testPet));
+  }
+
+  @Test
+  public void addPets() {
+    List<Pet> result = petServiceImpl.addPets(testList);
+    assertEquals(testList, result);
   }
 
 }
