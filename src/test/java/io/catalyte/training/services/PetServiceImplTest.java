@@ -1,5 +1,6 @@
 package io.catalyte.training.services;
 
+import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
@@ -154,5 +155,13 @@ class PetServiceImplTest {
         () -> "Message did not equal '" + expectedMessage + "', actual message:"
             + exception.getMessage());
   }
+
+  @Test
+  public void deletePet() {
+    when(petRepository.existsById(anyLong())).thenReturn(true);
+    petServiceImpl.deletePet(1L);
+    verify(petRepository).deleteById(any());
+  }
+
 
 }
