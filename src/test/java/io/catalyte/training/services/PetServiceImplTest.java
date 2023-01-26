@@ -134,5 +134,12 @@ class PetServiceImplTest {
     assertEquals(testPet, result);
   }
 
+  @Test
+  public void updatePetByIdDBError() {
+    when(petRepository.findById(anyLong())).thenThrow(EmptyResultDataAccessException.class);
+    assertThrows(ServiceUnavailable.class,
+        () -> petServiceImpl.updatePetById(1L, testPet));
+  }
+
 
 }
